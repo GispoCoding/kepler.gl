@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
 import {sortableContainer, sortableElement} from 'react-sortable-hoc';
 import styled from 'styled-components';
 import {createSelector} from 'reselect';
+import {FormattedMessage} from 'react-intl';
 import {arrayMove} from 'utils/data-utils';
 
 import LayerPanelFactory from './layer-panel/layer-panel';
@@ -84,7 +85,7 @@ export function AddDataButtonFactory() {
   const AddDataButton = ({onClick, isInactive}) => (
     <Button onClick={onClick} isInactive={!isInactive} width="105px" secondary>
       <Add height="12px" />
-      Add Data
+      <FormattedMessage id="add.data" />
     </Button>
   );
 

@@ -26,7 +26,8 @@ import {
   EXPORT_HTML_MAP_MODES,
   EXPORT_IMG_RATIOS,
   EXPORT_MAP_FORMATS,
-  RESOLUTIONS
+  RESOLUTIONS,
+  LOCALES
 } from 'constants/default-settings';
 import {createNotification, errorNotification} from 'utils/notifications-utils';
 import {calculateExportImageSize} from 'utils/export-utils';
@@ -97,7 +98,8 @@ export const DEFAULT_MAP_CONTROLS = [
   'mapLegend',
   'toggle3d',
   'splitMap',
-  'mapDraw'
+  'mapDraw',
+  'mapLocale'
 ].reduce(
   (final, current) => ({
     ...final,
@@ -222,7 +224,9 @@ export const INITIAL_UI_STATE = {
   // ui notifications
   notifications: DEFAULT_NOTIFICATIONS,
   // load files
-  loadFiles: DEFAULT_LOAD_FILES
+  loadFiles: DEFAULT_LOAD_FILES,
+  // Locale of the UI
+  locale: LOCALES.en
 };
 
 /* Updaters */
@@ -317,6 +321,8 @@ export const toggleMapControlUpdater = (state, {payload: {panelId, index = 0}}) 
     }
   }
 });
+
+
 
 /**
  * Toggle active map control panel
@@ -633,4 +639,18 @@ export const toggleSplitMapUpdater = state => ({
     }),
     {}
   )
+});
+
+/**
+ * Set the locale of the UI
+ * @memberof uiStateUpdaters
+ * @param {Object} state `uiState`
+ * @param {Object} action
+ * @param {String} action.payload locale
+ * @returns {Object} nextState
+ * @public
+ */
+export const setLocaleUpdater = (state, {payload: {locale}}) => ({
+  ...state,
+  locale
 });

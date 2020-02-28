@@ -24,6 +24,8 @@ import {bindActionCreators} from 'redux';
 import styled, {ThemeProvider, withTheme} from 'styled-components';
 import {createSelector} from 'reselect';
 import {connect as keplerGlConnect} from 'connect/keplergl-connect';
+import {IntlProvider} from 'react-intl';
+import {messages} from '../localization';
 import {RootContext} from 'components/context';
 
 import * as VisStateActions from 'actions/vis-state-actions';
@@ -336,6 +338,7 @@ function KeplerGlFactory(
 
       return (
         <RootContext.Provider value={this.root}>
+          <IntlProvider locale={uiState.locale} messages={messages[uiState.locale]}>
           <ThemeProvider theme={theme}>
             <GlobalStyle
               width={width}
@@ -399,6 +402,7 @@ function KeplerGlFactory(
               />
             </GlobalStyle>
           </ThemeProvider>
+          </IntlProvider>
         </RootContext.Provider>
       );
     }

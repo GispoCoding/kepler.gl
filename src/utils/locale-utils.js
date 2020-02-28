@@ -18,50 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// Constants
-export {
-  ADD_DATA_ID,
-  ADD_MAP_STYLE_ID,
-  AGGREGATION_TYPES,
-  ALL_FIELD_TYPES,
-  DATA_TABLE_ID,
-  DEFAULT_COLOR_RANGE,
-  DEFAULT_LAYER_GROUPS,
-  DEFAULT_MAP_STYLES,
-  DEFAULT_NOTIFICATION_TOPICS,
-  DEFAULT_NOTIFICATION_TYPES,
-  DELETE_DATA_ID,
-  DIMENSIONS,
-  EDITOR_MODES,
-  EXPORT_DATA_ID,
-  EXPORT_DATA_TYPE_OPTIONS,
-  EXPORT_IMAGE_ID,
-  EXPORT_IMG_RATIO_OPTIONS,
-  EXPORT_IMG_RATIOS,
-  EXPORT_IMG_RESOLUTION_OPTIONS,
-  EXPORT_MAP_FORMAT_OPTIONS,
-  EXPORT_MAP_FORMATS,
-  EXPORT_MAP_ID,
-  FIELD_OPTS,
-  FILTER_TYPES,
-  GEOJSON_FIELDS,
-  ICON_FIELDS,
-  KEPLER_GL_NAME,
-  KEPLER_GL_VERSION,
-  KEPLER_GL_WEBSITE,
-  LAYER_BLENDINGS,
-  LAYER_TYPES,
-  MAX_DEFAULT_TOOLTIPS,
-  PANELS,
-  SIDEBAR_PANELS,
-  SCALE_TYPES,
-  THEME,
-  TRIP_ARC_FIELDS,
-  TRIP_POINT_FIELDS,
-  LOCALES
-} from './default-settings';
-
-export {GITHUB_BUG_REPORT, GITHUB_USER_GUIDE} from './user-guides';
-
-export {VizColorPalette, DataVizColors} from './custom-color-ranges';
-export {COLOR_RANGES, DefaultColorRange} from './color-ranges';
+// Flat messages since react-intl does not seem to support nested structures
+// Adapted from https://medium.com/siren-apparel-press/internationalization-and-localization-of-sirenapparel-eu-sirenapparel-us-and-sirenapparel-asia-ddee266066a2
+export const flattenMessages = (nestedMessages, prefix = '') => {
+  return Object.keys(nestedMessages).reduce((messages, key) => {
+    const value = nestedMessages[key];
+    const prefixedKey = prefix ? `${prefix}.${key}` : key;
+    if (typeof value === 'string') {
+      messages[prefixedKey] = value;
+    } else {
+      Object.assign(messages, flattenMessages(value, prefixedKey));
+    }
+    return messages;
+  }, {});
+};

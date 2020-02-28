@@ -39,11 +39,12 @@ import {
   Rectangle,
   CursorClick,
   EyeSeen,
-  EyeUnseen
+  EyeUnseen,
+  Gear
 } from 'components/common/icons';
 import VerticalToolbar from 'components/common/vertical-toolbar';
 import ToolbarItem from 'components/common/toolbar-item';
-import {EDITOR_MODES} from 'constants/default-settings';
+import {EDITOR_MODES, LOCALES} from 'constants/default-settings';
 
 const StyledMapControl = styled.div`
   right: 0;
@@ -291,6 +292,41 @@ const MapDrawPanel = React.memo(
 
 MapDrawPanel.displayName = 'MapDrawPanel';
 
+const LocalePanel = React.memo(
+  ({availableLocales, isActive, onToggleMenuPanel, onSetLocale, activeLocale}) => {
+    return (
+      <div style={{position: 'relative'}}>
+        {isActive ? (
+          <StyledToolbar show={isActive}>
+            {availableLocales.map(locale => (
+              <ToolbarItem
+                key={locale}
+                onClick={() => onSetLocale(locale)}
+                label={locale}
+                active={activeLocale === locale}
+              />
+            ))}
+          </StyledToolbar>
+        ) : null}
+        <MapControlButton
+          onClick={e => {
+            e.preventDefault();
+            onToggleMenuPanel();
+          }}
+          active={isActive}
+          data-tip
+          data-for="locale"
+        >
+          <Gear height="22px" />
+          <MapControlTooltip id="locale" message="Select locale" />
+        </MapControlButton>
+      </div>
+    );
+  }
+);
+
+LocalePanel.displayName = 'LocalePanel';
+
 const MapControlFactory = () => {
   class MapControl extends Component {
     static propTypes = {
@@ -307,6 +343,8 @@ const MapControlFactory = () => {
       onSetEditorMode: PropTypes.func.isRequired,
       onToggleEditorVisibility: PropTypes.func.isRequired,
       top: PropTypes.number.isRequired,
+      onSetLocale: PropTypes.func.isRequired,
+      locale: PropTypes.string.isRequired,
 
       // optional
       readOnly: PropTypes.bool,
@@ -352,7 +390,8 @@ const MapControlFactory = () => {
         onToggleMapControl,
         editor,
         scale,
-        readOnly
+        readOnly,
+        locale
       } = this.props;
 
       const {
@@ -360,7 +399,8 @@ const MapControlFactory = () => {
         mapLegend = {},
         toggle3d = {},
         splitMap = {},
-        mapDraw = {}
+        mapDraw = {},
+        mapLocale = {}
       } = mapControls;
 
       return (
@@ -417,6 +457,18 @@ const MapControlFactory = () => {
                 onToggleMenuPanel={() => onToggleMapControl('mapDraw')}
                 onSetEditorMode={this.props.onSetEditorMode}
                 onToggleEditorVisibility={this.props.onToggleEditorVisibility}
+              />
+            </ActionPanel>
+          ) : null}
+
+          {mapLocale.show ? (
+            <ActionPanel key={5}>
+              <LocalePanel
+                isActive={mapLocale.active}
+                activeLocale={locale}
+                availableLocales={Object.keys(LOCALES)}
+                onSetLocale={this.props.onSetLocale}
+                onToggleMenuPanel={() => onToggleMapControl('mapLocale')}
               />
             </ActionPanel>
           ) : null}
