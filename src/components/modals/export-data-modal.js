@@ -29,6 +29,7 @@ import {
   StyledFilteredOption,
   StyledType
 } from 'components/common/styled-components';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const propTypes = {
   datasets: PropTypes.object.isRequired,
@@ -78,7 +79,8 @@ const ExportDataModalFactory = () => {
         dataType,
         filtered,
         onChangeExportDataType,
-        onChangeExportFiltered
+        onChangeExportFiltered,
+        intl
       } = this.props;
 
       return (
@@ -86,23 +88,33 @@ const ExportDataModalFactory = () => {
           <div>
             <StyledExportSection>
               <div className="description">
-                <div className="title">Dataset</div>
-                <div className="subtitle">Choose the datasets you want to export</div>
+                <div className="title">
+                  <FormattedMessage id={'modal.exportData.datasetTitle'} />
+                </div>
+                <div className="subtitle">
+                  <FormattedMessage id={'modal.exportData.datasetSubtitle'} />
+                </div>
               </div>
               <div className="selection">
                 <select value={selectedDataset} onChange={this._onSelectDataset}>
-                  {['All'].concat(Object.keys(datasets)).map(d => (
-                    <option key={d} value={d}>
-                      {(datasets[d] && datasets[d].label) || d}
-                    </option>
-                  ))}
+                  {[intl.formatMessage({id: 'modal.exportData.allDatasets'})]
+                    .concat(Object.keys(datasets))
+                    .map(d => (
+                      <option key={d} value={d}>
+                        {(datasets[d] && datasets[d].label) || d}
+                      </option>
+                    ))}
                 </select>
               </div>
             </StyledExportSection>
             <StyledExportSection>
               <div className="description">
-                <div className="title">Data Type</div>
-                <div className="subtitle">Choose the type of data you want to export</div>
+                <div className="title">
+                  <FormattedMessage id={'modal.exportData.dataTypeTitle'} />
+                </div>
+                <div className="subtitle">
+                  <FormattedMessage id={'modal.exportData.dataTypeSubtitle'} />
+                </div>
               </div>
               <div className="selection">
                 {EXPORT_DATA_TYPE_OPTIONS.map(op => (
@@ -119,9 +131,11 @@ const ExportDataModalFactory = () => {
             </StyledExportSection>
             <StyledExportSection>
               <div className="description">
-                <div className="title">Filter Data</div>
+                <div className="title">
+                  <FormattedMessage id={'modal.exportData.dataTypeTitle'} />
+                </div>
                 <div className="subtitle">
-                  You can choose exporting original data or filtered data
+                  <FormattedMessage id={'modal.exportData.filterDataSubtitle'} />
                 </div>
               </div>
               <div className="selection">
@@ -129,7 +143,9 @@ const ExportDataModalFactory = () => {
                   selected={!filtered}
                   onClick={() => onChangeExportFiltered(false)}
                 >
-                  <div className="filtered-title">Unfiltered Data</div>
+                  <div className="filtered-title">
+                    <FormattedMessage id={'modal.exportData.unfilteredData'} />
+                  </div>
                   <div className="filtered-subtitle">
                     {getDataRowCount(datasets, selectedDataset, false)}
                   </div>
@@ -138,7 +154,9 @@ const ExportDataModalFactory = () => {
                   selected={filtered}
                   onClick={() => onChangeExportFiltered(true)}
                 >
-                  <div className="filtered-title">Filtered Data</div>
+                  <div className="filtered-title">
+                    <FormattedMessage id={'modal.exportData.filteredData'} />
+                  </div>
                   <div className="filtered-subtitle">
                     {getDataRowCount(datasets, selectedDataset, true)}
                   </div>
@@ -151,7 +169,7 @@ const ExportDataModalFactory = () => {
     }
   }
   ExportDataModal.propTypes = propTypes;
-  return ExportDataModal;
+  return injectIntl(ExportDataModal);
 };
 
 export default ExportDataModalFactory;

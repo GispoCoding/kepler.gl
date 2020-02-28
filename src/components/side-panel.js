@@ -264,7 +264,9 @@ export default function SidePanelFactory(
             <SidePanelContent className="side-panel__content">
               <div>
                 <PanelTitle className="side-panel__content__title">
-                  <FormattedMessage id={(panels.find(({id}) => id === activeSidePanel) || {}).id} />
+                  <FormattedMessage
+                    id={(panels.find(({id}) => id === activeSidePanel) || {}).label}
+                  />
                 </PanelTitle>
                 {activeSidePanel === 'layer' && (
                   <LayerManager

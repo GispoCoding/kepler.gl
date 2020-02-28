@@ -25,6 +25,7 @@ import {rgb} from 'd3-color';
 import ColorLegend from 'components/common/color-legend';
 import {DIMENSIONS, CHANNEL_SCALES} from 'constants/default-settings';
 import {camelToTitle} from 'utils/utils';
+import {FormattedMessage, FormattedHTMLMessage, useIntl} from 'react-intl';
 
 export const StyledMapControlLegend = styled.div`
   padding: 10px 0 10px ${props => props.theme.mapControl.padding}px;
@@ -67,14 +68,18 @@ export const StyledMapControlLegend = styled.div`
 export const VisualChannelMetric = ({name}) => (
   <div className="legend--layer__title">
     <span className="legend--layer_by">by </span>
-    <span className="legend--layer_color_field">{name}</span>
+    <span className="legend--layer_color_field">
+      <FormattedHTMLMessage id={name} values={{name: useIntl().formatMessage({id: name})}} />
+    </span>
   </div>
 );
 
 export const LayerSizeLegend = ({label, name}) => (
   <div className="legend--layer_size-schema">
     <p>
-      <span className="legend--layer_by">{label}</span>
+      <span className="legend--layer_by">
+        <FormattedMessage id={label} />
+      </span>
     </p>
     <VisualChannelMetric name={name} />
   </div>
