@@ -23,6 +23,7 @@ import classnames from 'classnames';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {media} from 'styles';
+import {FormattedMessage} from 'react-intl';
 
 const ModalTab = styled.div`
   align-items: flex-end;
@@ -85,7 +86,7 @@ export const ModalTabItem = ({currentMethod, method, toggleMethod}) => {
       })}
       onClick={onClick}
     >
-      <div>{method.label || method.id}</div>
+      <div>{method.label ? <FormattedMessage id={method.label} /> : method.id}</div>
     </StyledLoadDataModalTabItem>
   );
 };

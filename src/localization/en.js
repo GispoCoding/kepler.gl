@@ -29,7 +29,9 @@ export default {
     outline: 'outline',
     stroke: 'stroke',
     density: 'density',
-    height: 'height'
+    height: 'height',
+    sum: 'sum',
+    pointCount: 'point count'
   },
   placeholder: {
     search: 'Search',
@@ -107,7 +109,7 @@ export default {
       polygon: 'polygon',
       cluster: 'cluster',
       icon: 'icon',
-      heatmap:' heatmap',
+      heatmap: ' heatmap',
       h3: 'H3',
       trip: 'trip',
       '3d': '3D'
@@ -314,6 +316,13 @@ export default {
           '* Map config is coupled with loaded datasets. ‘dataId’ is used to bind layers, filters, and tooltips to a specific dataset. ' +
           'When passing this config to addDataToMap, make sure the dataset id matches the dataId/s in this config.'
       }
+    },
+    loadingDialog: {
+      loading: 'Loading...'
+    },
+    loadData: {
+      upload: 'Load Files',
+      storage: 'Load from Storage'
     }
   },
   header: {
@@ -362,10 +371,24 @@ export default {
     sizeScale: 'Size Scale',
     scale: 'Scale'
   },
+  fileUploader: {
+    message: 'Drag & Drop Your File(s) Here',
+    chromeMessage:
+      '*Chrome user: Limit file size to 250mb, if need to upload larger file, try Safari',
+    disclaimer:
+      '*kepler.gl is a client-side application with no server backend. Data lives only on your machine/browser. ' +
+      'No information or map data is sent to any server.',
+    configUploadMessage:
+      'Upload **CSV**, **GeoJson** or saved map **Json**. Read more about [**supported file formats**]',
+    browseFiles: 'browse your files',
+    uploading: 'Uploading',
+    fileNotSupported: 'File {errorFiles} is not supported.',
+    or: 'or'
+  },
   density: 'density',
   'Point Count': 'Point Count',
   'Bug Report': 'Bug Report',
   'User Guide': 'User Guide',
-  'Save': 'Save',
-  'Share': 'Share'
+  Save: 'Save',
+  Share: 'Share'
 };

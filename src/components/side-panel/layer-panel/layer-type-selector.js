@@ -101,7 +101,10 @@ const LayerTypeListItem = ({value, isTile}) => (
       <value.icon height={`${isTile ? ITEM_SIZE.large : ITEM_SIZE.small}px`} />
     </div>
     <div className="layer-type-selector__item__label">
-      <FormattedMessage id={`layer.type.${value.label.toLowerCase()}`} />
+      <FormattedMessage
+        id={`layer.type.${value.label.toLowerCase()}`}
+        defaultMessage={value.label}
+      />
     </div>
   </StyledListItem>
 );

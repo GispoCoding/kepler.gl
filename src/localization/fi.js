@@ -30,7 +30,9 @@ export default {
     outline: 'ääriviiva',
     stroke: 'viiva',
     density: 'tiheys',
-    coverage: 'kattavuus'
+    coverage: 'kattavuus',
+    sum: 'summa',
+    pointCount: 'pisteiden lukumäärä'
   },
   placeholder: {
     search: 'Etsi',
@@ -108,7 +110,7 @@ export default {
       polygon: 'polygoni',
       cluster: 'klusteri',
       icon: 'kuva',
-      heatmap:' lämpökartta',
+      heatmap: ' lämpökartta',
       h3: 'H3',
       trip: 'matka',
       '3d': '3D'
@@ -318,6 +320,13 @@ export default {
           '* Kartan asetukset ovat sidoksissa ladattuihin aineistoihin. Arvoa ‘dataId’ käytetään tasojen, suodattimien ja vihjeiden liittämiseksi tiettyyn aineistoon. ' +
           'Varmista, että aineiston dataId:t vastaavat asetusten arvoja jos lataat asetukset käyttäen `addDataToMap`-funktiolle.'
       }
+    },
+    loadingDialog: {
+      loading: 'Ladataan...'
+    },
+    loadData: {
+      upload: 'Lataa tiedostot',
+      storage: 'Lataa tallennustilasta'
     }
   },
   header: {
@@ -366,6 +375,23 @@ export default {
     sizeScale: 'Koon skaala',
     scale: 'Skaala'
   },
+  fileUploader: {
+    message: 'Raahaa ja pudota tiedostosi tänne',
+    chromeMessage:
+      '*Chromen käyttäjä: Rajoita tiedostokokosi 250Mb:hen. Jos haluat suurempia tiedostoja, kokeile Safaria',
+    disclaimer:
+      '*kepler.gl on client-side sovellus, data pysyy vain selaimessasi...' +
+      'Tietoja ei lähetetä palvelimelle.',
+    configUploadMessage:
+      'Lisää **CSV**, **GeoJson** tai tallennettu kartta **Json**. Lue lisää [**tuetuista formaateista**]',
+    browseFiles: 'selaa tiedostojasi',
+    uploading: 'ladataan',
+    fileNotSupported: 'Tiedosto {errorFiles} ei ole tuettu.',
+    or: 'tai'
+  },
   density: 'tiheys',
-  'Point Count': 'Pisteiden lukumäärä'
+  'Bug Report': 'Bugiraportointi',
+  'User Guide': 'Opas',
+  Save: 'Tallenna',
+  Share: 'Jaa'
 };
