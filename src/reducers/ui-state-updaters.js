@@ -100,14 +100,13 @@ export const DEFAULT_MAP_CONTROLS = [
   'mapLegend',
   'toggle3d',
   'splitMap',
-  'mapDraw',
-  'mapLocale'
+  'mapDraw'
 ].reduce(
   (final, current) => ({
     ...final,
     [current]: DEFAULT_MAP_CONTROLS_FEATURES
   }),
-  {}
+  {mapLocale: {show: false, active: false, activeMapIndex: 0}}
 );
 
 
