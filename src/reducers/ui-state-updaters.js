@@ -84,6 +84,8 @@ const uiStateUpdaters = null;
  * @property {Object} mapLegend Default: `{show: true, active: false}`
  * @property {Object} toggle3d Default: `{show: true}`
  * @property {Object} splitMap Default: `{show: true}`
+ * @property {Object} mapDraw Default: `{show: true, active: false}`
+ * @property {Object} mapLocale Default: `{show: false, active: false}`
  * @public
  */
 const DEFAULT_MAP_CONTROLS_FEATURES = {
@@ -98,15 +100,15 @@ export const DEFAULT_MAP_CONTROLS = [
   'mapLegend',
   'toggle3d',
   'splitMap',
-  'mapDraw',
-  'mapLocale'
+  'mapDraw'
 ].reduce(
   (final, current) => ({
     ...final,
     [current]: DEFAULT_MAP_CONTROLS_FEATURES
   }),
-  {}
+  {mapLocale: {show: false, active: false, activeMapIndex: 0}}
 );
+
 
 /**
  * Default image export config
