@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, {Component} from 'react';
+import React, {Component, useCallback} from 'react';
 import classnames from 'classnames';
 
 import PropTypes from 'prop-types';
@@ -42,10 +42,18 @@ import {
 import {LAYER_BLENDINGS} from 'constants/default-settings';
 
 const LayerBlendingSelector = ({layerBlending, updateLayerBlending, intl}) => {
-  const labeledLayerBlendings = Object.keys(LAYER_BLENDINGS).reduce((ret, key) => {
-    ret[intl.formatMessage({id: LAYER_BLENDINGS[key].label})] = key;
-    return ret;
-  }, {});
+  const labeledLayerBlendings = Object.keys(LAYER_BLENDINGS).reduce(
+    (acc, current) => ({
+      ...acc,
+      [intl.formatMessage({id: LAYER_BLENDINGS[current].label})]: current
+    }),
+    {}
+  );
+
+  const onChange = useCallback(blending => updateLayerBlending(labeledLayerBlendings[blending]), [
+    updateLayerBlending,
+    labeledLayerBlendings
+  ]);
 
   return (
     <SidePanelSection>
@@ -57,7 +65,7 @@ const LayerBlendingSelector = ({layerBlending, updateLayerBlending, intl}) => {
         options={Object.keys(labeledLayerBlendings)}
         multiSelect={false}
         searchable={false}
-        onChange={blending => updateLayerBlending(labeledLayerBlendings[blending])}
+        onChange={onChange}
       />
     </SidePanelSection>
   );

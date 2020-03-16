@@ -784,7 +784,7 @@ export default function LayerConfiguratorFactory(SourceDataSelector) {
           <LayerConfigGroup
             {...layer.visConfigSettings.filled}
             {...visConfiguratorProps}
-            label="Fill Color"
+            label="layer.fillColor"
             collapsible
           >
             {layer.config.colorField ? (
@@ -805,7 +805,7 @@ export default function LayerConfiguratorFactory(SourceDataSelector) {
           <LayerConfigGroup
             {...layer.visConfigSettings.stroked}
             {...visConfiguratorProps}
-            label="Stroke Color"
+            label="layer.strokeColor"
             collapsible
           >
             {layer.config.strokeColorField ? (
@@ -826,7 +826,7 @@ export default function LayerConfiguratorFactory(SourceDataSelector) {
           </LayerConfigGroup>
 
           {/* Stroke Width */}
-          <LayerConfigGroup {...visConfiguratorProps} label="Stroke Width" collapsible>
+          <LayerConfigGroup {...visConfiguratorProps} label="layer.strokeWidth" collapsible>
             {layer.config.sizeField ? (
               <VisConfigSlider
                 {...layer.visConfigSettings.sizeRange}
@@ -862,13 +862,13 @@ export default function LayerConfiguratorFactory(SourceDataSelector) {
             <VisConfigSlider
               {...layer.visConfigSettings.elevationScale}
               {...visConfiguratorProps}
-              label="Elevation Scale"
+              label="layerVisConfigs.elevationScale"
             />
             <ConfigGroupCollapsibleContent>
               <VisConfigSlider
                 {...layer.visConfigSettings.heightRange}
                 {...visConfiguratorProps}
-                label="Height Range"
+                label="layerVisConfigs.heightRange"
               />
               <VisConfigSwitch {...visConfiguratorProps} {...layer.visConfigSettings.wireframe} />
             </ConfigGroupCollapsibleContent>
@@ -949,7 +949,7 @@ const StyledHowToButton = styled.div`
 export const HowToButton = ({onClick}) => (
   <StyledHowToButton>
     <Button link small onClick={onClick}>
-      How to
+      <FormattedMessage id={'layerConfiguration.howTo'} />
     </Button>
   </StyledHowToButton>
 );

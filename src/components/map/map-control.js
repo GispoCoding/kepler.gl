@@ -18,30 +18,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, {Component} from 'react';
+import React, {Component, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {createSelector} from 'reselect';
 import styled from 'styled-components';
 import {FormattedMessage} from 'react-intl';
 
-import {Tooltip, IconRoundSmall, MapControlButton} from 'components/common/styled-components';
+import {IconRoundSmall, MapControlButton, Tooltip} from 'components/common/styled-components';
 import MapLayerSelector from 'components/common/map-layer-selector';
 import KeplerGlLogo from 'components/common/logo';
 import MapLegend from './map-legend';
 import {
   Close,
-  Split,
-  Legend,
   Cube3d,
-  Delete,
-  Layers,
-  DrawPolygon,
-  Polygon,
-  Rectangle,
   CursorClick,
+  Delete,
+  DrawPolygon,
   EyeSeen,
   EyeUnseen,
-  Gear
+  Gear,
+  Layers,
+  Legend,
+  Polygon,
+  Rectangle,
+  Split
 } from 'components/common/icons';
 import VerticalToolbar from 'components/common/vertical-toolbar';
 import ToolbarItem from 'components/common/toolbar-item';
@@ -304,6 +304,22 @@ MapDrawPanel.displayName = 'MapDrawPanel';
 
 const LocalePanel = React.memo(
   ({availableLocales, isActive, onToggleMenuPanel, onSetLocale, activeLocale}) => {
+    const onClickItem = useCallback(
+      locale => {
+        onSetLocale(locale);
+      },
+      [onSetLocale]
+    );
+
+    const onClickButton = useCallback(
+      e => {
+        e.preventDefault();
+        onToggleMenuPanel();
+      },
+      [onToggleMenuPanel]
+    );
+    const getLabel = useCallback(locale => `toolbar.${locale}`, []);
+
     return (
       <div style={{position: 'relative'}}>
         {isActive ? (
@@ -311,22 +327,14 @@ const LocalePanel = React.memo(
             {availableLocales.map(locale => (
               <ToolbarItem
                 key={locale}
-                onClick={() => onSetLocale(locale)}
-                label={locale}
+                onClick={() => onClickItem(locale)}
+                label={getLabel(locale)}
                 active={activeLocale === locale}
               />
             ))}
           </StyledToolbar>
         ) : null}
-        <MapControlButton
-          onClick={e => {
-            e.preventDefault();
-            onToggleMenuPanel();
-          }}
-          active={isActive}
-          data-tip
-          data-for="locale"
-        >
+        <MapControlButton onClick={onClickButton} active={isActive} data-tip data-for="locale">
           <Gear height="22px" />
           <MapControlTooltip id="locale" message="tooltip.selectLocale" />
         </MapControlButton>

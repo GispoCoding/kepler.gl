@@ -27,7 +27,7 @@ import PanelHeaderAction from 'components/side-panel/panel-header-action';
 import {EyeSeen, EyeUnseen, VertDots, ArrowDown, Trash} from 'components/common/icons';
 
 import {InlineInput, StyledPanelHeader} from 'components/common/styled-components';
-import { FormattedMessage } from "react-intl";
+import {FormattedMessage} from 'react-intl';
 
 const propTypes = {
   // required
@@ -153,7 +153,9 @@ const LayerPanelHeader = ({
       <LayerTitleSection className="layer__title">
         <div>
           <LayerLabelEditor label={label} onEdit={onUpdateLayerLabel} />
-          <div className="layer__title__type"><FormattedMessage id={`layer.type.${layerType.toLowerCase()}`}/></div>
+          <div className="layer__title__type">
+            {layerType && <FormattedMessage id={`layer.type.${layerType.toLowerCase()}`} />}
+          </div>
         </div>
       </LayerTitleSection>
     </HeaderLabelSection>

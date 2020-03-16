@@ -52,7 +52,7 @@ class TextLabelPanel extends Component {
     const {updateLayerTextLabel, textLabel, fields} = this.props;
     const currentFields = textLabel.map(tl => tl.field && tl.field.name).filter(d => d);
     return (
-      <LayerConfigGroup label={'panel.label.label'} collapsible>
+      <LayerConfigGroup label={'panel.text.label'} collapsible>
         <ConfigGroupCollapsibleHeader>
           <FieldSelector
             fields={fields}
@@ -65,7 +65,7 @@ class TextLabelPanel extends Component {
           {textLabel.map((tl, idx) => (
             <div key={tl.field ? tl.field.name : `null-${idx}`}>
               <PanelLabel>
-                <FormattedMessage id={'panel.label.labelWithId'} values={{labelId: idx + 1}} />
+                <FormattedMessage id={'panel.text.labelWithId'} values={{labelId: idx + 1}} />
               </PanelLabel>
               <SidePanelSection>
                 <FieldSelector
@@ -78,7 +78,7 @@ class TextLabelPanel extends Component {
               </SidePanelSection>
               <SidePanelSection>
                 <PanelLabel>
-                  <FormattedMessage id="panel.label.fontSize" />
+                  <FormattedMessage id="panel.text.fontSize" />
                 </PanelLabel>
                 <RangeSlider
                   {...LAYER_TEXT_CONFIGS.fontSize}
@@ -89,7 +89,7 @@ class TextLabelPanel extends Component {
               </SidePanelSection>
               <SidePanelSection>
                 <PanelLabel>
-                  <FormattedMessage id="panel.label.fontColor" />
+                  <FormattedMessage id="panel.text.fontColor" />
                 </PanelLabel>
                 <ColorSelector
                   colorSets={[
@@ -104,7 +104,7 @@ class TextLabelPanel extends Component {
                 <SpaceBetweenFlexbox>
                   <SBFlexboxItem>
                     <PanelLabel>
-                      <FormattedMessage id="panel.label.textAnchor" />
+                      <FormattedMessage id="panel.text.textAnchor" />
                     </PanelLabel>
                     <ItemSelector
                       {...LAYER_TEXT_CONFIGS.textAnchor}
@@ -114,7 +114,7 @@ class TextLabelPanel extends Component {
                   </SBFlexboxItem>
                   <SBFlexboxItem>
                     <PanelLabel>
-                      <FormattedMessage id="panel.label.alignment" />
+                      <FormattedMessage id="panel.text.alignment" />
                     </PanelLabel>
                     <ItemSelector
                       {...LAYER_TEXT_CONFIGS.textAlignment}
@@ -129,7 +129,7 @@ class TextLabelPanel extends Component {
           <SidePanelSection>
             <Button link onClick={val => updateLayerTextLabel(textLabel.length)}>
               <Add height="12px" />
-              <FormattedMessage id="panel.label.addMoreLabel" />
+              <FormattedMessage id="panel.text.addMoreLabel" />
             </Button>
           </SidePanelSection>
         </ConfigGroupCollapsibleContent>

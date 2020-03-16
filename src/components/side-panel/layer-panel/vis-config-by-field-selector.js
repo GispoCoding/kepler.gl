@@ -51,20 +51,29 @@ class VisConfigByFieldSelector extends Component {
   };
 
   render() {
-    const {property, showScale, selectedField, description, intl, scaleOptions = []} = this.props;
+    const {
+      property,
+      showScale,
+      selectedField,
+      description,
+      label,
+      intl,
+      scaleOptions = []
+    } = this.props;
 
     return (
       <SidePanelSection>
         <SidePanelSection>
           <PanelLabelWrapper>
             <PanelLabel>
-              {(this.props.label && (
-                <FormattedMessage id={`property.${camelize(this.props.label)}`} />
-              )) || (
+              {(label && <FormattedMessage id={label} />) || (
                 <FormattedMessage
                   id="layer.propertyBasedOn"
                   values={{
-                    property: intl.formatMessage({id: `property.${camelize(property)}`})
+                    property: intl.formatMessage({
+                      id: `property.${camelize(property)}`,
+                      defaultMessage: property
+                    })
                   }}
                 />
               )}

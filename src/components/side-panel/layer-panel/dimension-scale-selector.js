@@ -28,7 +28,10 @@ const DimensionScaleSelector = ({label, onSelect, options, scaleType, disabled =
   return (
     <SidePanelSection>
       <PanelLabel>
-        <FormattedMessage id={label ? `scale.${camelize(label)}` : 'misc.scale'} />
+        <FormattedMessage
+          id={label ? `scale.${camelize(label)}` : 'misc.scale'}
+          defaultMessage={label}
+        />
       </PanelLabel>
       <ItemSelector
         disabled={disabled}

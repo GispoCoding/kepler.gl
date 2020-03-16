@@ -31,7 +31,7 @@ export default {
     density: 'density',
     height: 'height',
     sum: 'sum',
-    pointCount: 'point count'
+    pointCount: 'Point Count'
   },
   placeholder: {
     search: 'Search',
@@ -61,7 +61,7 @@ export default {
     '3dBuilding': '3d Building'
   },
   panel: {
-    label: {
+    text: {
       label: 'label',
       labelWithId: 'Label {labelId}',
       fontSize: 'Font size',
@@ -112,6 +112,7 @@ export default {
       heatmap: ' heatmap',
       h3: 'H3',
       trip: 'trip',
+      s2: 'S2',
       '3d': '3D'
     }
   },
@@ -147,7 +148,8 @@ export default {
     fill: 'Fill',
     enablePolygonHeight: 'Enable Polygon Height',
     showWireframe: 'Show Wireframe',
-    weightIntensity: 'Weight Intensity'
+    weightIntensity: 'Weight Intensity',
+    heightRange: 'Height Range'
   },
   layerManager: {
     addData: 'Add Data',
@@ -160,7 +162,8 @@ export default {
     '3dBuildingColor': '3D Building Color'
   },
   layerConfiguration: {
-    defaultDescription: 'Calculate {property} based on selected field'
+    defaultDescription: 'Calculate {property} based on selected field',
+    howTo: 'How to'
   },
   filterManager: {
     addFilter: 'Add Filter'
@@ -323,6 +326,23 @@ export default {
     loadData: {
       upload: 'Load Files',
       storage: 'Load from Storage'
+    },
+    tripInfo: {
+      title: 'How to enable trip animation',
+      description1:
+        'In order to animate the path, the geoJSON data needs to contain `LineString` in its feature geometry, and the coordinates in the LineString need to have 4 elements in the formats of',
+      code: ' [longitude, latitude, altitude, timestamp] ',
+      description2:
+        'with the last element being a timestamp. Valid timestamp formats include unix in seconds such as `1564184363` or in milliseconds such as `1564184363000`.',
+      example: 'Example:'
+    },
+    iconInfo: {
+      title: 'How to draw icons',
+      description1: 'In your csv, create a column, put the name of the icon you want to draw in it. You can leave the cell empty if you do not want the icon to show for some points. When the column is named',
+      code: 'icon',
+      description2: ' kepler.gl will automatically create a icon layer for you.',
+      example: 'Example:',
+      icons: 'Icons'
     }
   },
   header: {
@@ -369,6 +389,7 @@ export default {
   scale: {
     colorScale: 'Color Scale',
     sizeScale: 'Size Scale',
+    strokeScale: 'Stroke Scale',
     scale: 'Scale'
   },
   fileUploader: {
@@ -386,7 +407,6 @@ export default {
     or: 'or'
   },
   density: 'density',
-  'Point Count': 'Point Count',
   'Bug Report': 'Bug Report',
   'User Guide': 'User Guide',
   Save: 'Save',

@@ -179,3 +179,30 @@ test('Components -> SaveMapModal on click provider', t => {
 
   t.end();
 });
+
+test('Components -> SaveMapModal.intl', t => {
+  let wrapper;
+  // mount English version
+  t.doesNotThrow(() => {
+    wrapper = mountWithTheme(
+      <IntlWrapper>
+        <SaveMapModal onUpdateSetting={() => {}} onSetMapInfo={() => {}} />
+      </IntlWrapper>
+    );
+  }, 'Show not fail mount props');
+
+  t.equal(wrapper.find('.title').text(), 'Cloud storage');
+
+  // mount Finnish version
+  t.doesNotThrow(() => {
+    wrapper = mountWithTheme(
+      <IntlWrapper locale={'fi'}>
+        <SaveMapModal onUpdateSetting={() => {}} onSetMapInfo={() => {}} />
+      </IntlWrapper>
+    );
+  }, 'Show not fail mount props');
+
+  t.equal(wrapper.find('.title').text(), 'Pilvitallennus');
+
+  t.end();
+});

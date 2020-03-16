@@ -96,7 +96,7 @@ class HeatmapLayer extends MapboxGLLayer {
         key: 'weight',
         // supportedFieldTypes can be determined by channelScaleType
         // or specified here
-        defaultMeasure: 'density',
+        defaultMeasure: 'property.density',
         supportedFieldTypes: [ALL_FIELD_TYPES.real, ALL_FIELD_TYPES.integer],
         channelScaleType: CHANNEL_SCALES.size
       }

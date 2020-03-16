@@ -62,7 +62,7 @@ export default {
     '3dBuilding': '3d-rakennukset'
   },
   panel: {
-    label: {
+    text: {
       label: 'Nimiö',
       labelWithId: 'Nimiö {labelId}',
       fontSize: 'Fontin koko',
@@ -112,6 +112,7 @@ export default {
       icon: 'kuva',
       heatmap: ' lämpökartta',
       h3: 'H3',
+      s2: 'S2',
       trip: 'matka',
       '3d': '3D'
     }
@@ -163,7 +164,8 @@ export default {
     '3dBuildingColor': '3D-rakennusten väri'
   },
   layerConfiguration: {
-    defaultDescription: 'Laske suureen {property} arvo valitun kentän perusteella'
+    defaultDescription: 'Laske suureen {property} arvo valitun kentän perusteella',
+    howTo: 'Miten toimii'
   },
   filterManager: {
     addFilter: 'Lisää suodatin'
@@ -183,7 +185,7 @@ export default {
     layerSettings: 'Tason asetukset',
     closePanel: 'Sulje paneeli',
     switchToDualView: 'Vaihda kaksoiskarrtanäkymään',
-    showLegend: 'Näytä legenda',
+    showLegend: 'Näytä selite',
     disable3DMap: 'Poistu 3D-näkymästä',
     DrawOnMap: 'Piirrä kartalle',
     selectLocale: 'Valitse kielisyys',
@@ -239,8 +241,8 @@ export default {
       ratio16_9: '16:9',
       resolutionTitle: 'Resoluutio',
       resolutionDescription: 'Korkea resoluutio on parempi tulostamista varten.',
-      mapLegendTitle: 'Kartan legenda',
-      mapLegendAdd: 'Lisää legenda karttaan'
+      mapLegendTitle: 'Kartan selite',
+      mapLegendAdd: 'Lisää selite karttaan'
     },
     exportData: {
       datasetTitle: 'Aineistot',
@@ -327,11 +329,28 @@ export default {
     loadData: {
       upload: 'Lataa tiedostot',
       storage: 'Lataa tallennustilasta'
+    },
+    tripInfo: {
+      title: 'Kuinka käyttää matka-animaatiota',
+      description1:
+        'Reitin animoimiseksi geoJSON-aineiston täytyy olla geometriatyypiltään `LineString`, LineString-koordinaattien täytyy sisältää 4 elementtiä formaatissa:',
+      code: ' [pituusaste, leveysaste, korkeus, aikaleima] ',
+      description2:
+        'siten, että viimeinen elementti on aikaleima. Aikaleima voi olla muodoltaan unix-sekunteja, kuten `1564184363` tai millisekunteja, kuten `1564184363000`.',
+      example: 'Esimerkki:'
+    },
+    iconInfo: {
+      title: 'Miten piirtää kuvia',
+      description1: 'csv-tiedostossasi, luo sarake nimeltä icon. Voit jättää sen tyhjäksi jos et halua piirtää kuvaa joillain pisteillä. Kun sarakkeen nimi on ',
+      code: 'icon',
+      description2: ' kepler.gl luo automaattisesti kuvatason sinua varten.',
+      example: 'Esimerkki:',
+      icons: 'Kuvat'
     }
   },
   header: {
     visibleLayers: 'Näkyvissä olevat tasot',
-    layerLegend: 'Tason legenda'
+    layerLegend: 'Tason selite'
   },
   interactions: {
     tooltip: 'Vihje',
@@ -373,6 +392,7 @@ export default {
   scale: {
     colorScale: 'Värin skaala',
     sizeScale: 'Koon skaala',
+    strokeScale: 'Viivan paksuuden skaala',
     scale: 'Skaala'
   },
   fileUploader: {
