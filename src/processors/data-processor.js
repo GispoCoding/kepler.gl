@@ -362,10 +362,11 @@ export function analyzerTypeToFieldType(aType) {
       return ALL_FIELD_TYPES.integer;
     case BOOLEAN:
       return ALL_FIELD_TYPES.boolean;
+    case ARRAY:
+      return ALL_FIELD_TYPES.array;
     case GEOMETRY:
     case GEOMETRY_FROM_STRING:
     case PAIR_GEOMETRY_FROM_STRING:
-    case ARRAY:
     case OBJECT:
       // TODO: create a new data type for objects and arrays
       return ALL_FIELD_TYPES.geojson;

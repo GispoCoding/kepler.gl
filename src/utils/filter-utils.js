@@ -18,18 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {ascending, extent, histogram as d3Histogram, ticks} from 'd3-array';
-import keyMirror from 'keymirror';
-import get from 'lodash.get';
-import booleanWithin from '@turf/boolean-within';
-import {point as turfPoint} from '@turf/helpers';
-import {Decimal} from 'decimal.js';
-import {ALL_FIELD_TYPES, FILTER_TYPES} from 'constants/default-settings';
-import {maybeToDate, notNullorUndefined, unique, timeToUnixMilli} from './data-utils';
-import * as ScaleUtils from './data-scale-utils';
-import {LAYER_TYPES} from '../constants';
-import {generateHashId, set, toArray} from './utils';
-import {getGpuFilterProps, getDatasetFieldIndexForFilter} from './gpu-filter-utils';
+import { ascending, extent, histogram as d3Histogram, ticks } from "d3-array";
+import keyMirror from "keymirror";
+import get from "lodash.get";
+import booleanWithin from "@turf/boolean-within";
+import { point as turfPoint } from "@turf/helpers";
+import { Decimal } from "decimal.js";
+import { ALL_FIELD_TYPES, FILTER_TYPES } from "constants/default-settings";
+import { maybeToDate, notNullorUndefined, timeToUnixMilli, unique } from "./data-utils";
+import * as ScaleUtils from "./data-scale-utils";
+import { LAYER_TYPES } from "../constants";
+import { generateHashId, set, toArray } from "./utils";
+import { getDatasetFieldIndexForFilter, getGpuFilterProps } from "./gpu-filter-utils";
+import moment from "moment";
 
 export const TimestampStepMap = [
   {max: 1, step: 0.05},
@@ -87,7 +88,8 @@ export const FILTER_COMPONENTS = {
   [FILTER_TYPES.multiSelect]: 'MultiSelectFilter',
   [FILTER_TYPES.timeRange]: 'TimeRangeFilter',
   [FILTER_TYPES.range]: 'RangeFilter',
-  [FILTER_TYPES.polygon]: 'PolygonFilter'
+  [FILTER_TYPES.polygon]: 'PolygonFilter',
+  [FILTER_TYPES.array]: 'ArrayFilter'
 };
 
 export const DEFAULT_FILTER_STRUCTURE = {
@@ -198,6 +200,13 @@ const filterValidators = {
  * @return {*}
  */
 export function validateFilter(dataset, filter) {
+  // TODO: is there a better way?
+  if (filter.type === "array") {
+    return {
+      filter: filter,
+      dataset: dataset
+    };
+  }
   // match filter.dataId
   const failed = {dataset, filter: null};
   const filterDataId = toArray(filter.dataId);
@@ -332,6 +341,14 @@ export function getFilterProps(allData, field) {
         gpu: true
       };
 
+    case ALL_FIELD_TYPES.array:
+      return {
+        ...filterProps,
+        type: FILTER_TYPES.array,
+        value: [],
+        gpu: false
+      };
+
     default:
       return {};
   }
@@ -366,6 +383,15 @@ export function getFieldDomain(allData, field) {
 
     case ALL_FIELD_TYPES.timestamp:
       return getTimestampFieldDomain(allData, valueAccessor);
+    case ALL_FIELD_TYPES.array:
+      const startOfDay = moment
+        .utc()
+        .startOf('day')
+        .unix();
+      const moments = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22].map(
+        i => (startOfDay + 60 * 60 * i) * 1000
+      );
+      return {domain: allData.map(item => `${item[1]}:${item[2]}`), moments};
 
     default:
       return {domain: ScaleUtils.getOrdinalDomain(allData, valueAccessor)};
@@ -434,6 +460,40 @@ export function getFilterFunction(field, dataId, filter, layers) {
         .map(layer => getPolygonFilterFunctor(layer, filter));
 
       return data => layerFilterFunctions.every(filterFunc => filterFunc(data));
+
+    case FILTER_TYPES.array:
+      return data => {
+        const selectedIdx = 4;
+        const tripIdx = 3;
+        if (filter.value && Object.prototype.toString.call(filter.value) === '[object String]') {
+          const parts = filter.value.split(':');
+          const value = parseInt(parts[1]);
+          const timeStart = filter.timeRange ? filter.timeRange[0] : filter.moments[0];
+          const timeEnd = filter.timeRange   ? filter.timeRange[1] : filter.moments[1];
+          let trips = 0.0;
+          let passed = false;
+          data[selectedIdx] = value === data[2];
+
+          filter.moments
+            .map((val, i) => (val >= timeStart && val <= timeEnd ? i : null))
+            .filter(i => i).forEach(time =>
+            data[field.tableFieldIndex - 1][time].forEach(valForTime => {
+              if (value === valForTime[0]) {
+                passed = true;
+                trips += valForTime[1];
+              }
+            })
+          );
+
+          data[tripIdx] = trips;
+          return passed;
+        } else {
+          data[tripIdx] = 0.0;
+          data[selectedIdx] = false;
+          return true;
+        }
+      };
+
     default:
       return () => true;
   }
@@ -933,7 +993,7 @@ export function applyFiltersToDatasets(datasetIds, datasets, filters, layers) {
 }
 
 /**
- * Applies a new field name value to fielter and update both filter and dataset
+ * Applies a new field name value to filter and update both filter and dataset
  * @param {Object} filter - to be applied the new field name on
  * @param {Object} dataset - dataset the field belongs to
  * @param {string} fieldName - field.name

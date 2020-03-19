@@ -318,7 +318,8 @@ export const FILTER_TYPES = keyMirror({
   select: null,
   timeRange: null,
   multiSelect: null,
-  polygon: null
+  polygon: null,
+  array: null
 });
 
 export const SCALE_TYPES = keyMirror({
@@ -351,7 +352,8 @@ export const ALL_FIELD_TYPES = keyMirror({
   real: null,
   string: null,
   timestamp: null,
-  point: null
+  point: null,
+  array: null
 });
 
 // Data Table
@@ -447,6 +449,10 @@ export const FILED_TYPE_DISPLAY = {
   [ALL_FIELD_TYPES.point]: {
     label: 'point',
     color: BLUE3
+  },
+  [ALL_FIELD_TYPES.array]: {
+    label: 'array',
+    color: RED
   }
 };
 

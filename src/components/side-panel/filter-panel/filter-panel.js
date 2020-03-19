@@ -32,6 +32,7 @@ import SingleSelectFilterPanelFactory from 'components/filters/filter-panels/sin
 import MultiSelectFilterPanelFactory from 'components/filters/filter-panels/multi-select-filter-panel';
 import RangeFilterPanelFactory from 'components/filters/filter-panels/range-filter-panel';
 import PolygonFilterPanelFactory from 'components/filters/filter-panels/polygon-filter-panel';
+import ArrayFilterPanelFactory from 'components/filters/filter-panels/array-filter-panel';
 
 const StyledFilterPanel = styled.div`
   margin-bottom: 12px;
@@ -49,7 +50,8 @@ FilterPanelFactory.deps = [
   SingleSelectFilterPanelFactory,
   MultiSelectFilterPanelFactory,
   RangeFilterPanelFactory,
-  PolygonFilterPanelFactory
+  PolygonFilterPanelFactory,
+  ArrayFilterPanelFactory
 ];
 
 function FilterPanelFactory(
@@ -59,7 +61,8 @@ function FilterPanelFactory(
   SingleSelectFilterPanel,
   MultiSelectFilterPanel,
   RangeFilterPanel,
-  PolygonFilterPanel
+  PolygonFilterPanel,
+  ArrayFilterPanel
 ) {
   const FilterPanelComponents = {
     default: NewFilterPanel,
@@ -67,7 +70,8 @@ function FilterPanelFactory(
     [FILTER_TYPES.select]: SingleSelectFilterPanel,
     [FILTER_TYPES.multiSelect]: MultiSelectFilterPanel,
     [FILTER_TYPES.range]: RangeFilterPanel,
-    [FILTER_TYPES.polygon]: PolygonFilterPanel
+    [FILTER_TYPES.polygon]: PolygonFilterPanel,
+    [FILTER_TYPES.array]: ArrayFilterPanel
   };
 
   return class FilterPanel extends Component {

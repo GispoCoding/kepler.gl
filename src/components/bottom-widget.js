@@ -22,6 +22,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TimeWidgetFactory from './filters/time-widget';
+import TimeArrayWidgetFactory from './filters/time-array-widget';
 import AnimationControlFactory from './common/animation-control/animation-control';
 import {FILTER_TYPES} from 'constants/default-settings';
 
@@ -38,7 +39,7 @@ const propTypes = {
 
 const maxWidth = 1080;
 
-BottomWidgetFactory.deps = [TimeWidgetFactory, AnimationControlFactory];
+BottomWidgetFactory.deps = [TimeWidgetFactory, TimeArrayWidgetFactory, AnimationControlFactory];
 
 const BottomWidgetContainer = styled.div`
   position: absolute;
@@ -54,7 +55,7 @@ const BottomWidgetContainer = styled.div`
   z-index: 1;
 `;
 
-export default function BottomWidgetFactory(TimeWidget, AnimationControl) {
+export default function BottomWidgetFactory(TimeWidget, TimeArrayWidget, AnimationControl) {
   const BottomWidget = props => {
     const {
       datasets,
@@ -70,8 +71,9 @@ export default function BottomWidgetFactory(TimeWidget, AnimationControl) {
     const {activeSidePanel, readOnly} = uiState;
     const isOpen = Boolean(activeSidePanel);
 
+    const isArrayFilter = filters.findIndex(f => f.enlarged && f.type === FILTER_TYPES.array) > -1;
     const enlargedFilterIdx = filters.findIndex(
-      f => f.enlarged && f.type === FILTER_TYPES.timeRange
+      f => f.enlarged && (f.type === FILTER_TYPES.timeRange || f.type === FILTER_TYPES.array)
     );
     const isAnyFilterAnimating = filters.some(f => f.isAnimating);
     const enlargedFilterWidth = isOpen ? containerW - sidePanelWidth : containerW;
@@ -96,7 +98,7 @@ export default function BottomWidgetFactory(TimeWidget, AnimationControl) {
             updateAnimationSpeed={visStateActions.updateLayerAnimationSpeed}
           />
         ) : null}
-        {enlargedFilterIdx > -1 && Object.keys(datasets).length > 0 ? (
+        {enlargedFilterIdx > -1 && Object.keys(datasets).length > 0 && !isArrayFilter ? (
           <TimeWidget
             filter={filters[enlargedFilterIdx]}
             index={enlargedFilterIdx}
@@ -104,6 +106,20 @@ export default function BottomWidgetFactory(TimeWidget, AnimationControl) {
             datasets={datasets}
             readOnly={readOnly}
             showTimeDisplay={showFloatingTimeDisplay}
+            setFilterPlot={visStateActions.setFilterPlot}
+            setFilter={visStateActions.setFilter}
+            toggleAnimation={visStateActions.toggleFilterAnimation}
+            updateAnimationSpeed={visStateActions.updateFilterAnimationSpeed}
+            enlargeFilter={visStateActions.enlargeFilter}
+          />
+        ) : isArrayFilter ? (
+          <TimeArrayWidget
+            filter={filters[enlargedFilterIdx]}
+            index={enlargedFilterIdx}
+            isAnyFilterAnimating={isAnyFilterAnimating}
+            datasets={datasets}
+            readOnly={readOnly}
+            showTimeDisplay={false}
             setFilterPlot={visStateActions.setFilterPlot}
             setFilter={visStateActions.setFilter}
             toggleAnimation={visStateActions.toggleFilterAnimation}
