@@ -239,6 +239,7 @@ export const FIELD_DISPLAY_FORMAT = {
   [ALL_FIELD_TYPES.real]: identity,
   [ALL_FIELD_TYPES.boolean]: d => String(d),
   [ALL_FIELD_TYPES.date]: identity,
+  [ALL_FIELD_TYPES.array]: d => Array.isArray(d) ? `[${String(d)}]` : '',
   [ALL_FIELD_TYPES.geojson]: d =>
     typeof d === 'string'
       ? d

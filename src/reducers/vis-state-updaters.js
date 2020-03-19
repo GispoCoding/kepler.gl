@@ -527,6 +527,11 @@ export function setFilterUpdater(state, action) {
     // TODO: Next PR for UI if we update dataId, we need to consider two cases:
     // 1. dataId is empty: create a default filter
     // 2. Add a new dataset id
+
+    case 'timeRange':
+      newFilter['timeRange'] = value;
+      break;
+
     case FILTER_UPDATER_PROPS.dataId:
       // if trying to update filter dataId. create an empty new filter
       newFilter = updateFilterDataId(dataId);

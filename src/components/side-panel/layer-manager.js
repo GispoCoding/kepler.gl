@@ -40,6 +40,7 @@ import {
 } from 'components/common/styled-components';
 
 import {LAYER_BLENDINGS} from 'constants/default-settings';
+import moment from "moment";
 
 const LayerBlendingSelector = ({layerBlending, updateLayerBlending, intl}) => {
   const labeledLayerBlendings = Object.keys(LAYER_BLENDINGS).reduce(
@@ -49,7 +50,7 @@ const LayerBlendingSelector = ({layerBlending, updateLayerBlending, intl}) => {
     }),
     {}
   );
-
+  moment()
   const onChange = useCallback(blending => updateLayerBlending(labeledLayerBlendings[blending]), [
     updateLayerBlending,
     labeledLayerBlendings
