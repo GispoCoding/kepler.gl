@@ -18,13 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import TimeWidgetFactory from './filters/time-widget';
-import TimeArrayWidgetFactory from './filters/time-array-widget';
-import AnimationControlFactory from './common/animation-control/animation-control';
-import {FILTER_TYPES} from 'constants/default-settings';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import TimeWidgetFactory from "./filters/time-widget";
+import TimeArrayWidgetFactory from "./filters/time-array-widget";
+import AnimationControlFactory from "./common/animation-control/animation-control";
+import { FILTER_TYPES } from "constants/default-settings";
+import { CellSizeWidget } from "./cell-size-widget";
 
 const propTypes = {
   filters: PropTypes.arrayOf(PropTypes.object),
@@ -82,7 +83,8 @@ export default function BottomWidgetFactory(TimeWidget, TimeArrayWidget, Animati
     const animatedLayer = layers.filter(
       l => l.config.animation && l.config.animation.enabled && l.config.isVisible
     );
-
+    const aggLayers = layers.filter(layer => layer.type === 'hexagon' || layer.type === 'grid');
+    const aggLayer = aggLayers.length > 0 ? aggLayers[0] : null;
     const readToAnimation = Array.isArray(animationConfig.domain) && animationConfig.currentTime;
     // if animation control is showing, hide time display in time slider
     const showFloatingTimeDisplay = !animatedLayer.length;
@@ -127,6 +129,10 @@ export default function BottomWidgetFactory(TimeWidget, TimeArrayWidget, Animati
             enlargeFilter={visStateActions.enlargeFilter}
           />
         ) : null}
+        {aggLayer && (
+          <CellSizeWidget aggLayer={aggLayer}
+                          onChange={newConfig => visStateActions.layerVisConfigChange(aggLayer, newConfig)}/>
+        )}
       </BottomWidgetContainer>
     );
   };
