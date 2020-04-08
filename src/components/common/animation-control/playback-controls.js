@@ -62,22 +62,20 @@ function AnimationPlaybacksFactory() {
           disabled: !isAnimatable
         })}
       >
-        <ButtonGroup>
-          <IconButton
+        {/*<IconButton
             className="playback-control-button"
             {...btnStyle}
             onClick={updateAnimationTime}
           >
             <Reset height={buttonHeight} />
-          </IconButton>
-          <IconButton
-            {...btnStyle}
-            className={classnames('playback-control-button', {active: isAnimating})}
-            onClick={isAnimating ? pauseAnimation : startAnimation}
-          >
-            {isAnimating ? <Pause height={buttonHeight} /> : <Play height={buttonHeight} />}
-          </IconButton>
-        </ButtonGroup>
+          </IconButton>*/}
+        <IconButton
+          {...btnStyle}
+          className={classnames('playback-control-button', {active: isAnimating})}
+          onClick={isAnimating ? pauseAnimation : startAnimation}
+        >
+          {isAnimating ? <Pause height={buttonHeight} /> : <Play height={buttonHeight} />}
+        </IconButton>
       </StyledAnimationControls>
     );
   };

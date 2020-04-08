@@ -47,7 +47,7 @@ const BottomWidgetContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: ${props => props.theme.sidePanel.margin.top}px;
-  padding-right: ${props => props.theme.sidePanel.margin.right}px;
+  padding-right: ${props => props.theme.sidePanel.margin.right+30}px;
   padding-bottom: ${props => props.theme.sidePanel.margin.bottom}px;
   padding-left: ${props => props.theme.sidePanel.margin.left}px;
   width: ${props => props.width}px;

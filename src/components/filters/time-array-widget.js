@@ -77,10 +77,10 @@ const TopSectionWrapper = styled.div`
   }
 
   .animation-control__speed-control {
-    margin-right: -12px;
+    margin-right: -1px;
 
     .animation-control__speed-slider {
-      right: calc(0% - 48px);
+      right: calc(0% - 1px);
     }
   }
 `;
@@ -156,13 +156,13 @@ function TimeArrayWidgetFactory(SpeedControl, ArrayFilter) {
                 speed={filter.speed}
               />
             </StyledTitle>
-            {!readOnly ? (
+            {/* {!readOnly ? (
               <CenterFlexbox>
                 <IconRoundSmall>
                   <Close height="12px" onClick={this._onClose} />
                 </IconRoundSmall>
               </CenterFlexbox>
-            ) : null}
+            ) : null}*/}
           </TopSectionWrapper>
           <ArrayFilter
             filter={filter}

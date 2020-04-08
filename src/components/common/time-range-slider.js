@@ -33,7 +33,7 @@ import TimeSliderMarker from 'components/common/time-slider-marker';
 import PlaybackControlsFactory from 'components/common/animation-control/playback-controls';
 import {BASE_SPEED, DEFAULT_TIME_FORMAT} from 'constants/default-settings';
 
-const animationControlWidth = 140;
+const animationControlWidth = 10;
 
 const StyledSliderContainer = styled.div`
   align-items: flex-end;
@@ -43,11 +43,11 @@ const StyledSliderContainer = styled.div`
 
   .time-range-slider__control {
     margin-bottom: 12px;
-    margin-right: 30px;
+    margin-right: 2px;
   }
 
   .playback-control-button {
-    padding: 9px 12px;
+    padding: 9px 2px;
   }
 `;
 
