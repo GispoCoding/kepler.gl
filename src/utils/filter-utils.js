@@ -463,16 +463,20 @@ export function getFilterFunction(field, dataId, filter, layers) {
 
     case FILTER_TYPES.array:
       return data => {
+        const nameIndex = 1;
+        const tripNameIdx = 7;
         const selectedIdx = 4;
         const tripIdx = 3;
         if (filter.value && Object.prototype.toString.call(filter.value) === '[object String]') {
           const parts = filter.value.split(':');
+          const name = parts[0];
           const value = parseInt(parts[1]);
           const timeStart = filter.timeRange ? filter.timeRange[0] : filter.moments[0];
           const timeEnd = filter.timeRange ? filter.timeRange[1] : filter.moments[1];
           let trips = 0.0;
           let passed = false;
           data[selectedIdx] = value === data[2];
+          data[tripNameIdx] = field.tableFieldIndex === 6 ? `${data[nameIndex]} -> ${name}` : `${name} -> ${data[nameIndex]}`;
 
           filter.moments
             .map((val, i) => (val >= timeStart && val <= timeEnd ? i : null))
