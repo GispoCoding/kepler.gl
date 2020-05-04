@@ -18,19 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { ascending, extent, histogram as d3Histogram, ticks } from "d3-array";
-import keyMirror from "keymirror";
-import get from "lodash.get";
-import booleanWithin from "@turf/boolean-within";
-import { point as turfPoint } from "@turf/helpers";
-import { Decimal } from "decimal.js";
-import { ALL_FIELD_TYPES, FILTER_TYPES } from "constants/default-settings";
-import { maybeToDate, notNullorUndefined, timeToUnixMilli, unique } from "./data-utils";
-import * as ScaleUtils from "./data-scale-utils";
-import { LAYER_TYPES } from "../constants";
-import { generateHashId, set, toArray } from "./utils";
-import { getDatasetFieldIndexForFilter, getGpuFilterProps } from "./gpu-filter-utils";
-import moment from "moment";
+import {ascending, extent, histogram as d3Histogram, ticks} from 'd3-array';
+import keyMirror from 'keymirror';
+import get from 'lodash.get';
+import booleanWithin from '@turf/boolean-within';
+import {point as turfPoint} from '@turf/helpers';
+import {Decimal} from 'decimal.js';
+import {ALL_FIELD_TYPES, FILTER_TYPES} from 'constants/default-settings';
+import {maybeToDate, notNullorUndefined, timeToUnixMilli, unique} from './data-utils';
+import * as ScaleUtils from './data-scale-utils';
+import {LAYER_TYPES} from '../constants';
+import {generateHashId, set, toArray} from './utils';
+import {getDatasetFieldIndexForFilter, getGpuFilterProps} from './gpu-filter-utils';
+import moment from 'moment';
 
 export const TimestampStepMap = [
   {max: 1, step: 0.05},
@@ -201,7 +201,7 @@ const filterValidators = {
  */
 export function validateFilter(dataset, filter) {
   // TODO: is there a better way?
-  if (filter.type === "array") {
+  if (filter.type === 'array') {
     return {
       filter: filter,
       dataset: dataset
@@ -469,23 +469,24 @@ export function getFilterFunction(field, dataId, filter, layers) {
           const parts = filter.value.split(':');
           const value = parseInt(parts[1]);
           const timeStart = filter.timeRange ? filter.timeRange[0] : filter.moments[0];
-          const timeEnd = filter.timeRange   ? filter.timeRange[1] : filter.moments[1];
+          const timeEnd = filter.timeRange ? filter.timeRange[1] : filter.moments[1];
           let trips = 0.0;
           let passed = false;
           data[selectedIdx] = value === data[2];
 
           filter.moments
             .map((val, i) => (val >= timeStart && val <= timeEnd ? i : null))
-            .filter(i => i).forEach(time =>
-            data[field.tableFieldIndex - 1][time].forEach(valForTime => {
-              if (value === valForTime[0]) {
-                passed = true;
-                trips += valForTime[1];
-              }
-            })
-          );
+            .filter(i => i)
+            .forEach(time =>
+              data[field.tableFieldIndex - 1][time].forEach(valForTime => {
+                if (value === valForTime[0]) {
+                  passed = true;
+                  trips += valForTime[1];
+                }
+              })
+            );
 
-          data[tripIdx] = trips;
+          data[tripIdx] = Math.round((trips + Number.EPSILON) * 100) / 100;
           return passed;
         } else {
           data[tripIdx] = 0.0;
