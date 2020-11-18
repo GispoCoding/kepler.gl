@@ -69,7 +69,7 @@ export default function BottomWidgetFactory(TimeWidget, TimeArrayWidget, Animati
       layers
     } = props;
 
-    const {activeSidePanel, readOnly} = uiState;
+    const {activeSidePanel, readOnly, stripUI} = uiState;
     const isOpen = Boolean(activeSidePanel);
 
     const isArrayFilter = filters.findIndex(f => f.enlarged && f.type === FILTER_TYPES.array) > -1;
@@ -98,6 +98,7 @@ export default function BottomWidgetFactory(TimeWidget, TimeArrayWidget, Animati
             animationConfig={animationConfig}
             updateAnimationTime={visStateActions.updateAnimationTime}
             updateAnimationSpeed={visStateActions.updateLayerAnimationSpeed}
+            stripUI={stripUI}
           />
         ) : null}
         {enlargedFilterIdx > -1 && Object.keys(datasets).length > 0 && !isArrayFilter ? (

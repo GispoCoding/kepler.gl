@@ -229,7 +229,9 @@ export const INITIAL_UI_STATE = {
   // load files
   loadFiles: DEFAULT_LOAD_FILES,
   // Locale of the UI
-  locale: LOCALES.en
+  locale: LOCALES.en,
+  // Stripping of UI
+  stripUI: false,
 };
 
 /* Updaters */

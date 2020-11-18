@@ -131,6 +131,14 @@ function AnimationControlFactory(SpeedControl, AnimationPlaybacks, FloatingTimeD
     render() {
       const {currentTime, domain, speed} = this.props.animationConfig;
       const {showSpeedControl} = this.state;
+      const stripUI = this.props.stripUI;
+      if (stripUI && !this.state.isAnimating) {
+        this._startAnimation();
+      }
+
+      if (stripUI){
+        return null
+      }
 
       return (
         <BottomWidgetInner className="bottom-widget--inner">
