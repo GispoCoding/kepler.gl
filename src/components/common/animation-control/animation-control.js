@@ -137,7 +137,7 @@ function AnimationControlFactory(SpeedControl, AnimationPlaybacks, FloatingTimeD
       }
 
       if (stripUI){
-        return null
+        return (<FloatingTimeDisplay currentTime={currentTime} />)
       }
 
       return (
