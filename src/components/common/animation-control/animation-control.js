@@ -84,6 +84,10 @@ function AnimationControlFactory(SpeedControl, AnimationPlaybacks, FloatingTimeD
       if (!this._animation && this.state.isAnimating) {
         this._animation = requestAnimationFrame(this._nextFrame);
       }
+
+      if (this.props.stripUI && !this.state.isAnimating) {
+        this._startAnimation();
+      }
     }
 
     onSlider1Change = val => {
@@ -132,9 +136,6 @@ function AnimationControlFactory(SpeedControl, AnimationPlaybacks, FloatingTimeD
       const {currentTime, domain, speed} = this.props.animationConfig;
       const {showSpeedControl} = this.state;
       const stripUI = this.props.stripUI;
-      if (stripUI && !this.state.isAnimating) {
-        this._startAnimation();
-      }
 
       if (stripUI){
         return (<FloatingTimeDisplay currentTime={currentTime} />)
